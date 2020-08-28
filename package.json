@@ -1,0 +1,31 @@
+{
+  "name": "rama-slider",
+  "version": "1.0.0",
+  "description": "A collection of slideshows with different animations for complex layouts",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "slider",
+    "slideshow",
+    "carousel"
+  ],
+  "author": "Mohammed Ramadan <mohammed.ramadanko@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "7.10.5",
+    "@babel/core": "7.11.4",
+    "@babel/preset-typescript": "7.10.4",
+    "clean-webpack-plugin": "3.0.0",
+    "css-loader": "4.2.2",
+    "html-webpack-plugin": "4.3.0",
+    "node-sass": "4.14.1",
+    "sass-loader": "10.0.1",
+    "style-loader": "1.2.1",
+    "ts-loader": "8.0.3",
+    "typescript": "4.0.2",
+    "webpack": "4.44.1",
+    "webpack-cli": "3.3.12"
+  }
+}
