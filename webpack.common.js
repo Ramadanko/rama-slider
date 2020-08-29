@@ -30,7 +30,6 @@ module.exports = {
       template: './src/index.html',
       title: 'Rama Slider',
       inject: 'head'
-    }),
-    new CleanWebpackPlugin()
+    })
   ]
 }

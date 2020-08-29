@@ -1,1 +1,1 @@
-console.log('Hey buddy!')
+document.write('Hey buddy')
