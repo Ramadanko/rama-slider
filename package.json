@@ -4,11 +4,14 @@
   "description": "A collection of slideshows with different animations for complex layouts",
   "main": "dist/index.js",
   "scripts": {
-    "start:server": "npx serve build",
+    "start:server": "webpack-dev-server",
     "webpack:dev": "webpack --config webpack.dev.js -w",
     "prestart": "cross-env NODE_ENV=development",
     "start": "run-p webpack:dev start:server",
-    "prebuild": "cross-env NODE_ENV=production",
+    "clean:build": "rimraf ./build",
+    "clean:dist": "rimraf ./dist",
+    "prod:env": "cross-env NODE_ENV=production",
+    "prebuild": "npm-run-all clean:dist prod:env",
     "build": "webpack --config webpack.prod.js"
   },
   "keywords": [
@@ -28,15 +31,19 @@
     "cross-env": "7.0.2",
     "css-loader": "4.2.2",
     "eslint": "7.7.0",
+    "html-webpack-partials-plugin": "0.6.0",
     "html-webpack-plugin": "4.3.0",
+    "mini-css-extract-plugin": "0.11.0",
     "node-sass": "4.14.1",
     "npm-run-all": "4.1.5",
+    "rimraf": "3.0.2",
     "sass-loader": "10.0.1",
     "style-loader": "1.2.1",
     "ts-loader": "8.0.3",
     "typescript": "4.0.2",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0",
     "webpack-merge": "5.1.2"
   },
   "dependencies": {}
