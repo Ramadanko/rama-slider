@@ -1,1 +1,6 @@
-document.write('Hey buddy')
+import './index.scss'
+const BasicSlider = require('./BasicSlider/BasicSlider')
+
+module.exports = {
+  BasicSlider
+}
