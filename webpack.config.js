@@ -35,11 +35,12 @@ module.exports = {
       filename: 'index.html',
       template: './src/index.html',
       title: 'Rama Slider',
-      inject: 'head'
+      inject: false
     }),
     new HtmlWebpackPlugin({
       filename: 'BasicSlider/BasicSlider.html',
-      template: './src/BasicSlider/BasicSlider.html'
+      template: './src/BasicSlider/BasicSlider.html',
+      inject: false
     }),
     new MiniCssExtractPlugin({
       moduleFilename: (chunk) => {
