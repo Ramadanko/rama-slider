@@ -1,0 +1,26 @@
+.rama-slider-next-wrapper,
+.rama-slider-prev-wrapper {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.rama-slider-next-wrapper {
+  right: 0;
+}
+
+.rama-slider-prev-wrapper {
+  left: 0;
+}
+
+.rama-slider-next,
+.rama-slider-prev {
+  color: #1d1d1d;
+  background: #fff;
+  padding: 5px;
+}
