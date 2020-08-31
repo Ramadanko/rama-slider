@@ -5,13 +5,13 @@
   "main": "dist/index.js",
   "scripts": {
     "start:server": "webpack-dev-server",
-    "webpack:dev": "webpack --config webpack.dev.js -w",
+    "webpack:dev": "webpack -w",
     "start": "run-p webpack:dev start:server",
     "clean:build": "rimraf ./build",
     "clean:dist": "rimraf ./dist",
     "prod:env": "cross-env NODE_ENV=production",
     "prebuild": "npm-run-all clean:dist",
-    "build": "cross-env NODE_ENV=production webpack --config webpack.prod.js"
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "keywords": [
     "slider",
