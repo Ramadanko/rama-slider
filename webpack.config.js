@@ -1,21 +1,19 @@
+const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development'; // NODE_ENV is by command for production only
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
+const output = require('./config/webpack/output')
+const plugins = require('./config/webpack/plugins')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-module.exports = {
+let webpackOptions = {
+  mode: env,
   target: 'web',
   entry: {
     RamaSlider: './src/index.ts',
-    BasicSlider: './src/BasicSlider/BasicSlider.ts'
+    BasicSlider: './src/BasicSlider/BasicSlider.ts',
+    FadeSlider: './src/FadeSlider/FadeSlider.ts'
   },
-  output: {
-    filename: (pathData) => (pathData.chunk.name === 'RamaSlider' ? '[name].js' : '[name]/[name].js'),
-    path: path.resolve(__dirname, './build'),
-    libraryTarget: 'umd',
-    library: '[name]'
-  },
+  output,
+  plugins,
   resolve: {
     // Add `.ts` and `.tsx` as a resolvable extension.
     extensions: [".ts", ".tsx", ".js"]
@@ -30,23 +28,17 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: './src/index.html',
-      title: 'Rama Slider',
-      inject: false
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'BasicSlider/BasicSlider.html',
-      template: './src/BasicSlider/BasicSlider.html',
-      inject: false
-    }),
-    new MiniCssExtractPlugin({
-      moduleFilename: (chunk) => {
-        return chunk.name === 'RamaSlider' ? `${chunk.name}.css` : `${chunk.name}/${chunk.name}.css`
-      }
-    })
-  ]
+  // webpack-dev-server require webpack file to be named webpack.config.json
+  devServer: {
+    contentBase: path.join(__dirname, 'build'),
+    compress: true,
+    port: 8080
+  }
 }
+
+if (env === 'development') {
+  webpackOptions.devtool = 'inline-source-map'
+}
+
+module.exports = webpackOptions
 
