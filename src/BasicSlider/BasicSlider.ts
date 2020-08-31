@@ -10,9 +10,10 @@ class BasicSlider {
   prevButton: HTMLElement
   numberOfItems: number
   currentSlide: number
+  isTransitionActive: boolean
   options: OptionsInterface = {
     width: '600px',
-    speed: 300,
+    speed: .5,
     timeout: 5,
     autoPlay: true,
     itemsPerSlide: 1,
@@ -48,11 +49,17 @@ class BasicSlider {
     this.numberOfItems = this.container.children.length
     let trackWidth: number = this.container.children.length * 100
     this.newContainer.style.width = this.options.width
-
+    this.markSliderItems()
     this.newContainer.appendChild(this.createTrack(trackWidth))
     this.newContainer.appendChild(this.createNextButton())
     this.newContainer.appendChild(this.createPrevButton())
     this.container.replaceWith(this.newContainer)
+  }
+
+  markSliderItems(): void {
+    Array.from(this.container.children).forEach((item: HTMLElement, index: number) => {
+      item.className = item.className.length ? `${item.className} rama-slider-item-${index}` : `rama-slider-item-${index}`;
+    })
   }
 
   createTrack(trackWidth: number): HTMLElement {
@@ -62,6 +69,7 @@ class BasicSlider {
     this.trackContainer.className = 'rama-slider-track'
     this.trackContainer.style.width = trackWidth + '%'
     this.trackContainer.style.transform = `translateX(-${translateValue}%)`
+    this.trackContainer.style.transitionDuration = this.options.speed + 's'
     this.trackContainer.innerHTML = this.container.innerHTML
     return this.trackContainer
   }
@@ -75,8 +83,15 @@ class BasicSlider {
     nextButton.innerHTML = nextButtonContent
     this.nextButton = nextButton
     nextWrapper.appendChild(nextButton)
-    nextButton.onclick = () => { this.goToNext() }
+    nextButton.onclick = () => { this.goToNext(); this.toggleTransition() }
     return nextWrapper
+  }
+
+  toggleTransition(): void {
+    this.isTransitionActive = true
+    setTimeout(() => {
+      this.isTransitionActive = false
+    }, this.options.speed * 1000)
   }
 
   createPrevButton(): HTMLElement {
@@ -88,11 +103,13 @@ class BasicSlider {
     prevButton.innerHTML = prevButtonContent
     this.prevButton = prevButton
     prevWrapper.appendChild(prevButton)
-    prevButton.onclick = () => { this.goToPrev() }
+    prevButton.onclick = () => { this.goToPrev(); this.toggleTransition() }
     return prevWrapper
   }
 
   goToNext(): void {
+    if (this.isTransitionActive)
+      return
     let translateValue: number = 0
     this.currentSlide = this.currentSlide < this.numberOfItems ? ++this.currentSlide : 1
     translateValue = (this.currentSlide - 1) / this.numberOfItems * 100
@@ -100,18 +117,20 @@ class BasicSlider {
   }
 
   goToPrev(): void {
+    if (this.isTransitionActive)
+      return
     let translateValue: number = 0
     this.currentSlide = this.currentSlide > 1 ? --this.currentSlide : this.numberOfItems
     translateValue = (this.currentSlide - 1) / this.numberOfItems * 100
     this.trackContainer.style.transform = `translateX(-${translateValue}%)`
   }
 
-  fullScreenMode() {
+  fullScreenMode(): void {
     this.newContainer.className += ' in-fullScreenMode'
     this.newContainer.requestFullscreen()
   }
 
-  listenToFullScreenChange() {
+  listenToFullScreenChange(): void {
     this.newContainer.onfullscreenchange = () => {
       if (document.fullscreenElement === null)
         this.newContainer.className = this.newContainer.className.replace("in-fullScreenMode", '')
