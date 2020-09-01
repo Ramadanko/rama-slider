@@ -10,12 +10,14 @@ const plugins = [
   new HtmlWebpackPlugin({
     filename: 'BasicSlider/BasicSlider.html',
     template: './src/BasicSlider/BasicSlider.html',
-    inject: false
+    inject: false,
+    minify: true
   }),
   new HtmlWebpackPlugin({
     filename: 'FadeSlider/FadeSlider.html',
     template: './src/FadeSlider/FadeSlider.html',
-    inject: false
+    inject: false,
+    minify: true
   }),
   new MiniCssExtractPlugin({
     moduleFilename: (chunk) => {
