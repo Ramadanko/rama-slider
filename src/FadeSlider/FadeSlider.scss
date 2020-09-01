@@ -1,0 +1,36 @@
+.rama-slider {
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  height: 0px;
+  transition: opacity .5s;
+
+  &.rama-slider-fade {
+    .rama-slider-track {
+      height: 100%;
+      @import '../styles/rama-slider-item.scss';
+
+      [class*="rama-slider-item-"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity;
+
+        &.active {
+          opacity: 1;
+          z-index: 30;
+          position: static;
+        }
+
+        &>* {
+          display: block;
+        }
+      }
+    }
+  }
+
+  @import '../styles/arrows.scss';
+}

@@ -1,0 +1,17 @@
+.rama-slider {
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  height: 0px;
+  transition: opacity .5s;
+
+  &.rama-slider-basic {
+    .rama-slider-track {
+      display: flex;
+      transition: transform;
+      @import '../styles/rama-slider-item.scss';
+    }
+  }
+
+  @import '../styles/arrows.scss';
+}

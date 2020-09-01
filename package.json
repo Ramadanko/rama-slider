@@ -4,7 +4,14 @@
   "description": "A collection of slideshows with different animations for complex layouts",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:server": "webpack-dev-server",
+    "webpack:dev": "webpack -w",
+    "start": "run-p webpack:dev start:server",
+    "clean:build": "rimraf ./build",
+    "clean:dist": "rimraf ./dist",
+    "prod:env": "cross-env NODE_ENV=production",
+    "prebuild": "npm-run-all clean:dist",
+    "build": "cross-env NODE_ENV=production webpack"
   },
   "keywords": [
     "slider",
@@ -17,15 +24,26 @@
     "@babel/cli": "7.10.5",
     "@babel/core": "7.11.4",
     "@babel/preset-typescript": "7.10.4",
+    "@typescript-eslint/eslint-plugin": "3.10.1",
+    "@typescript-eslint/parser": "3.10.1",
     "clean-webpack-plugin": "3.0.0",
+    "cross-env": "7.0.2",
     "css-loader": "4.2.2",
+    "eslint": "7.7.0",
+    "html-webpack-exclude-assets-plugin": "0.0.7",
+    "html-webpack-partials-plugin": "0.6.0",
     "html-webpack-plugin": "4.3.0",
+    "mini-css-extract-plugin": "0.11.0",
     "node-sass": "4.14.1",
+    "npm-run-all": "4.1.5",
+    "rimraf": "3.0.2",
     "sass-loader": "10.0.1",
     "style-loader": "1.2.1",
     "ts-loader": "8.0.3",
     "typescript": "4.0.2",
     "webpack": "4.44.1",
-    "webpack-cli": "3.3.12"
-  }
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0"
+  },
+  "dependencies": {}
 }
