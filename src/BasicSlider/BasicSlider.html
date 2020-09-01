@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basic Slider</title>
+  <title>Rama Slider - Basic Slider</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
@@ -18,6 +18,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.min.css" />
   <link rel="stylesheet" href="../RamaSlider.css" type="text/css">
   <script src="BasicSlider.js"></script>
 </head>
@@ -41,13 +43,14 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" href="/BasicSlider/BasicSlider.html">BasicSlider</a>
+              <a class="dropdown-item" href="/FadeSlider/FadeSlider.html">FadeSlider</a>
             </div>
           </li>
         </ul>
       </div>
     </nav>
   </div>
-  <div id="BasicSlider" class="slider-test">
+  <div id="BasicSlider" class="rama-slider">
     <div>
       <img src="https://picsum.photos/id/1/1920/500" alt="placeholder">
     </div>
@@ -71,9 +74,20 @@
     </div>
   </div>
 
+  <pre>
+<code class="language-js">
+window.onload = function () {
+  let slider = new FadeSlider('.rama-slider', {
+    width: '100%',
+    speed: 1
+  })
+}
+</code>
+</pre>
+
   <script>
     window.onload = function () {
-      let slider = new BasicSlider('.slider-test', {
+      let slider = new BasicSlider('.rama-slider', {
         width: '100%'
       })
     }

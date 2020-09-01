@@ -2,16 +2,16 @@ import './BasicSlider.scss'
 import OptionsInterface from './OptionsInterface'
 class BasicSlider {
 
-  container: any
-  newContainer: HTMLElement
-  containerClass: string = 'rama-slider-basic'
-  trackContainer: HTMLElement
-  nextButton: HTMLElement
-  prevButton: HTMLElement
-  numberOfItems: number
-  currentSlide: number
-  isTransitionActive: boolean
-  options: OptionsInterface = {
+  protected container: string | HTMLElement | any
+  protected newContainer: HTMLElement
+  protected containerClass: string
+  protected trackContainer: HTMLElement
+  protected nextButton: HTMLElement
+  protected prevButton: HTMLElement
+  protected numberOfItems: number
+  protected currentSlide: number
+  protected isTransitionActive: boolean
+  protected options: OptionsInterface = {
     width: '600px',
     speed: .5,
     timeout: 5,
@@ -33,17 +33,23 @@ class BasicSlider {
     this.init()
   }
 
-  init(): void {
+  protected init(): void {
     let element = this.container
+    this.containerClass = this.createSliderHtmlClass();
     if (typeof element === 'string') {
       let name = element.substring(1)
       this.container = element[0] === '.' ? document.getElementsByClassName(name)[0] : document.getElementById(name)
     }
     this.wrapItems()
     this.listenToFullScreenChange()
+    this.done()
   }
 
-  wrapItems(): void {
+  protected createSliderHtmlClass(): string {
+    return 'rama-slider-basic'
+  }
+
+  protected wrapItems(): void {
     this.newContainer = this.container.cloneNode()
     this.newContainer.className += ` ${this.containerClass}`
     this.numberOfItems = this.container.children.length
@@ -56,25 +62,27 @@ class BasicSlider {
     this.container.replaceWith(this.newContainer)
   }
 
-  markSliderItems(): void {
+  protected markSliderItems(): void {
     Array.from(this.container.children).forEach((item: HTMLElement, index: number) => {
       item.className = item.className.length ? `${item.className} rama-slider-item-${index}` : `rama-slider-item-${index}`;
     })
   }
 
-  createTrack(trackWidth: number): HTMLElement {
+  protected createTrack(trackWidth: number): HTMLElement {
     let translateValue: number =
       this.options.startAtItem <= this.numberOfItems ? (this.options.startAtItem - 1) / this.numberOfItems * 100 : 0
     this.trackContainer = document.createElement('div')
     this.trackContainer.className = 'rama-slider-track'
-    this.trackContainer.style.width = trackWidth + '%'
-    this.trackContainer.style.transform = `translateX(-${translateValue}%)`
-    this.trackContainer.style.transitionDuration = this.options.speed + 's'
+    if (this.containerClass === 'rama-slider-basic') {
+      this.trackContainer.style.width = trackWidth + '%'
+      this.trackContainer.style.transform = `translateX(-${translateValue}%)`
+      this.trackContainer.style.transitionDuration = this.options.speed + 's'
+    }
     this.trackContainer.innerHTML = this.container.innerHTML
     return this.trackContainer
   }
 
-  createNextButton(): HTMLElement {
+  protected createNextButton(): HTMLElement {
     let { nextButtonClass, nextButtonContent } = this.options
     let nextWrapper = document.createElement('div')
     nextWrapper.className = 'rama-slider-next-wrapper'
@@ -87,14 +95,14 @@ class BasicSlider {
     return nextWrapper
   }
 
-  toggleTransition(): void {
+  protected toggleTransition(): void {
     this.isTransitionActive = true
     setTimeout(() => {
       this.isTransitionActive = false
     }, this.options.speed * 1000)
   }
 
-  createPrevButton(): HTMLElement {
+  protected createPrevButton(): HTMLElement {
     let { prevButtonClass, prevButtonContent } = this.options
     let prevWrapper = document.createElement('div')
     prevWrapper.className = 'rama-slider-prev-wrapper'
@@ -135,6 +143,11 @@ class BasicSlider {
       if (document.fullscreenElement === null)
         this.newContainer.className = this.newContainer.className.replace("in-fullScreenMode", '')
     }
+  }
+  protected done(): void {
+    this.newContainer.style.display = 'block'
+    this.newContainer.style.opacity = '1'
+    this.newContainer.style.height = 'auto'
   }
 }
 
