@@ -19,6 +19,12 @@ const plugins = [
     inject: false,
     minify: true
   }),
+  new HtmlWebpackPlugin({
+    filename: 'AnimatedSlider/AnimatedSlider.html',
+    template: './src/AnimatedSlider/AnimatedSlider.html',
+    inject: false,
+    minify: true
+  }),
   new MiniCssExtractPlugin({
     moduleFilename: (chunk) => {
       return chunk.name === 'RamaSlider' ? `${chunk.name}.css` : `${chunk.name}/${chunk.name}.css`

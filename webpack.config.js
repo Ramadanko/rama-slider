@@ -2,7 +2,7 @@ const env = process.env.NODE_ENV ? process.env.NODE_ENV : 'development'; // NODE
 const path = require('path')
 const output = require('./config/webpack/output')
 const plugins = require('./config/webpack/plugins')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const rules = require('./config/webpack/rules')
 
 let webpackOptions = {
   mode: env,
@@ -10,7 +10,8 @@ let webpackOptions = {
   entry: {
     RamaSlider: './src/index.ts',
     BasicSlider: './src/BasicSlider/BasicSlider.ts',
-    FadeSlider: './src/FadeSlider/FadeSlider.ts'
+    FadeSlider: './src/FadeSlider/FadeSlider.ts',
+    AnimatedSlider: './src/AnimatedSlider/AnimatedSlider.ts'
   },
   output,
   plugins,
@@ -19,20 +20,14 @@ let webpackOptions = {
     extensions: [".ts", ".tsx", ".js"]
   },
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/, use: ["ts-loader"], exclude: [/node_modules/]
-      },
-      {
-        test: /\.(css|scss)$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'], exclude: [/node_modules/]
-      }
-    ]
+    rules
   },
   // webpack-dev-server require webpack file to be named webpack.config.json
   devServer: {
     contentBase: path.join(__dirname, 'build'),
     compress: true,
-    port: 8080
+    port: 8080,
+    host: '0.0.0.0'
   }
 }
 
