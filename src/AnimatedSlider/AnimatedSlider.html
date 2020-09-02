@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rama Slider</title>
+  <title>Rama Slider - Animated Slider</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
@@ -18,8 +18,10 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="RamaSlider.css">
-  <script src="BasicSlider/BasicSlider.js"></script>
+  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/default.min.css">
+  <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/highlight.min.js"></script> -->
+  <link rel="stylesheet" href="../RamaSlider.css" type="text/css">
+  <script src="AnimatedSlider.js"></script>
 </head>
 
 <body>
@@ -49,6 +51,55 @@
       </div>
     </nav>
   </div>
+  <div id="AnimatedSlider" class="rama-slider">
+    <div>
+      <img src="https://picsum.photos/id/1/1920/500" alt="placeholder">
+    </div>
+    <div>
+      <img src="https://picsum.photos/id/1002/1920/500" alt="placeholder">
+    </div>
+    <div>
+      <img src="https://picsum.photos/id/1018/1920/500" alt="placeholder">
+    </div>
+    <div>
+      <img src="https://picsum.photos/id/1068/1920/500" alt="placeholder">
+    </div>
+    <div>
+      <img src="https://picsum.photos/id/108/1920/500" alt="placeholder">
+    </div>
+    <div>
+      <img src="https://picsum.photos/id/1001/1920/500" alt="placeholder">
+    </div>
+    <div>
+      <img src="https://picsum.photos/id/50/1920/500" alt="placeholder">
+    </div>
+  </div>
+
+  <style>
+    .example-code {
+      margin: 15px
+    }
+  </style>
+
+  <!-- <pre>
+    <code class="php">
+      window.onload = function () {
+        let slider = new AnimatedSlider('.rama-slider', {
+          width: '100%',
+          speed: 1
+        })
+      }
+    </code>
+  </pre> -->
+
+  <script>
+    let slider
+    window.onload = function () {
+      slider = new AnimatedSlider('.rama-slider', {
+        width: '100%'
+      })
+    }
+  </script>
 </body>
 
 </html>

@@ -10,7 +10,8 @@ interface SliderOptions {
   nextButtonClass?: string,
   nextButtonContent?: string,
   prevButtonContent?: string,
-  prevButtonClass?: string
+  prevButtonClass?: string,
+  animations?: Array<string>
 }
 
 export default SliderOptions

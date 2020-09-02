@@ -10,7 +10,7 @@ class BasicSlider {
   protected prevButton: HTMLElement
   protected numberOfItems: number
   protected currentSlide: number
-  protected isTransitionActive: boolean
+  protected isTransitionActive: boolean = false
   protected options: OptionsInterface = {
     width: '600px',
     speed: .5,
@@ -23,7 +23,8 @@ class BasicSlider {
     nextButtonClass: 'rama-slider-next',
     nextButtonContent: 'Next',
     prevButtonContent: 'Prev',
-    prevButtonClass: 'rama-slider-prev'
+    prevButtonClass: 'rama-slider-prev',
+    animations: ['StripesIn'] //'StripesOut', 'SquaresIn', 'SquaresOut'
   };
 
   constructor(container: any, options: object) {
@@ -43,6 +44,7 @@ class BasicSlider {
     this.wrapItems()
     this.listenToFullScreenChange()
     this.done()
+    this.prepareAnimation()
   }
 
   protected createSliderHtmlClass(): string {
@@ -91,7 +93,7 @@ class BasicSlider {
     nextButton.innerHTML = nextButtonContent
     this.nextButton = nextButton
     nextWrapper.appendChild(nextButton)
-    nextButton.onclick = () => { this.goToNext(); this.toggleTransition() }
+    nextButton.onclick = () => { this.goToNext(); }
     return nextWrapper
   }
 
@@ -111,13 +113,14 @@ class BasicSlider {
     prevButton.innerHTML = prevButtonContent
     this.prevButton = prevButton
     prevWrapper.appendChild(prevButton)
-    prevButton.onclick = () => { this.goToPrev(); this.toggleTransition() }
+    prevButton.onclick = () => { this.goToPrev(); }
     return prevWrapper
   }
 
   goToNext(): void {
     if (this.isTransitionActive)
       return
+    this.toggleTransition()
     let translateValue: number = 0
     this.currentSlide = this.currentSlide < this.numberOfItems ? ++this.currentSlide : 1
     translateValue = (this.currentSlide - 1) / this.numberOfItems * 100
@@ -127,6 +130,7 @@ class BasicSlider {
   goToPrev(): void {
     if (this.isTransitionActive)
       return
+    this.toggleTransition()
     let translateValue: number = 0
     this.currentSlide = this.currentSlide > 1 ? --this.currentSlide : this.numberOfItems
     translateValue = (this.currentSlide - 1) / this.numberOfItems * 100
@@ -149,6 +153,8 @@ class BasicSlider {
     this.newContainer.style.opacity = '1'
     this.newContainer.style.height = 'auto'
   }
+
+  protected prepareAnimation(): void { }
 }
 
 module.exports = BasicSlider

@@ -1,0 +1,48 @@
+.rama-slider {
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    z-index: -50;
+    overflow: hidden;
+
+    &.StripesIn {
+      .image-portion {
+        width: 10%;
+        height: 100%;
+        position: relative;
+        transition: top 1s, bottom 1s, opacity 2s;
+      }
+
+      .image-portion:nth-child(odd) {
+        top: 0;
+        opacity: 1;
+      }
+
+      .image-portion:nth-child(even) {
+        bottom: 0;
+        opacity: 1;
+      }
+    }
+
+    &.animate-items {
+      z-index: 90;
+    }
+
+    &.StripesIn.animate-items {
+      .image-portion:nth-child(odd) {
+        top: -100%;
+        opacity: 0;
+      }
+
+      .image-portion:nth-child(even) {
+        bottom: -100%;
+        opacity: 0;
+      }
+    }
+  }
+}

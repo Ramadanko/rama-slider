@@ -27,6 +27,13 @@ class FadeSlider extends BasicSlider {
   }
 
   goToNext(): void {
+    if (this.isTransitionActive)
+      return
+    this.toggleTransition()
+    this.moveToNextItem()
+  }
+
+  moveToNextItem(): void {
     let { trackContainer, currentSlide, numberOfItems } = this
     trackContainer.children[currentSlide - 1].className = trackContainer.children[currentSlide - 1].className.replace("active", '').trim()
     if (currentSlide === numberOfItems) {
@@ -39,21 +46,24 @@ class FadeSlider extends BasicSlider {
   }
 
   goToPrev(): void {
+    if (this.isTransitionActive)
+      return
+    this.toggleTransition()
+    this.moveToPrevItem();
+  }
+
+  moveToPrevItem(): void {
     let { trackContainer, currentSlide, numberOfItems } = this
     trackContainer.children[currentSlide - 1].className = trackContainer.children[currentSlide - 1].className.replace("active", '').trim()
     if (currentSlide === 1) {
       trackContainer.children[numberOfItems - 1].className = (trackContainer.children[numberOfItems - 1].className + ' active').trim()
       this.currentSlide = numberOfItems
     } else {
+      --currentSlide
       trackContainer.children[currentSlide - 1].className = (trackContainer.children[currentSlide - 1].className + ' active').trim()
-      this.currentSlide--
+      this.currentSlide = currentSlide
     }
   }
-
-  animateOverlay(): void {
-
-  }
-
 }
 
 module.exports = FadeSlider
