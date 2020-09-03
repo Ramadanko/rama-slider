@@ -11,7 +11,8 @@
     "clean:dist": "rimraf ./dist",
     "prod:env": "cross-env NODE_ENV=production",
     "prebuild": "npm-run-all clean:dist",
-    "build": "cross-env NODE_ENV=production webpack"
+    "build": "cross-env NODE_ENV=production webpack",
+    "clear": "run-p clean:build clean:dist"
   },
   "keywords": [
     "slider",
@@ -47,5 +48,8 @@
   },
   "dependencies": {
     "dom-to-image": "2.6.0"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
