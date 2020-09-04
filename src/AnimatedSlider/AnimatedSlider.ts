@@ -1,17 +1,19 @@
 import './AnimatedSlider.scss'
-const FadeSlider = require('../FadeSlider/FadeSlider')
-const domToImage = require('dom-to-image')
-const animationMarkups = require('./AnimationMarkups')
+import FadeSlider from '../FadeSlider/FadeSlider'
+import domToImage from 'dom-to-image'
+import animationMarkups from './AnimationMarkups'
+import OptionsInterface from '../BasicSlider/OptionsInterface'
 
 class AnimatedSlider extends FadeSlider {
 
+  imageUrl: string
   overlay: HTMLElement
   currentAnimation: string
-  animationTimeout: object = {
+  animationTimeout = {
     StripesIn: 1000
   }
-  constructor(container: any, options: object) {
-    super(container, options)
+  constructor(elementClassOrId: string, options: OptionsInterface) {
+    super(elementClassOrId, options)
   }
 
   createSliderHtmlClass(): string {
@@ -62,7 +64,7 @@ class AnimatedSlider extends FadeSlider {
     this.options.animations.push(this.currentAnimation)
     this.overlay = this.overlay ? this.overlay : document.createElement('div')
     this.overlay.className = `overlay ${this.currentAnimation}`
-    let markup = animationMarkups[this.currentAnimation](this.imageUrl)
+    const markup = animationMarkups[this.currentAnimation](this.imageUrl)
     this.overlay.innerHTML = markup// get animated children
     this.newContainer.appendChild(this.overlay)
   }
@@ -73,4 +75,4 @@ class AnimatedSlider extends FadeSlider {
 
 }
 
-module.exports = AnimatedSlider
+export default AnimatedSlider

@@ -2,7 +2,8 @@ import './BasicSlider.scss'
 import OptionsInterface from './OptionsInterface'
 class BasicSlider {
 
-  protected container: string | HTMLElement | any
+  protected elementClassOrId: string
+  protected container: HTMLElement
   protected newContainer: HTMLElement
   protected containerClass: string
   protected trackContainer: HTMLElement
@@ -10,15 +11,15 @@ class BasicSlider {
   protected prevButton: HTMLElement
   protected numberOfItems: number
   protected currentSlide: number
-  protected isTransitionActive: boolean = false
+  protected isTransitionActive = false
   protected options: OptionsInterface = {
     width: '600px',
     speed: .5,
     timeout: 5,
     autoPlay: true,
     itemsPerSlide: 1,
-    afterChange: null,
-    beforeChange: null,
+    afterChange: undefined,
+    beforeChange: undefined,
     startAtItem: 1,
     nextButtonClass: 'rama-slider-next',
     nextButtonContent: 'Next',
@@ -27,20 +28,18 @@ class BasicSlider {
     animations: ['StripesIn'] //'StripesOut', 'SquaresIn', 'SquaresOut'
   };
 
-  constructor(container: any, options: object) {
-    this.container = container
+  constructor(container: string, options: OptionsInterface) {
+    this.elementClassOrId = container
     this.options = Object.assign(this.options, options)
     this.currentSlide = this.options.startAtItem
     this.init()
   }
 
   protected init(): void {
-    let element = this.container
+    const element = this.elementClassOrId
     this.containerClass = this.createSliderHtmlClass();
-    if (typeof element === 'string') {
-      let name = element.substring(1)
-      this.container = element[0] === '.' ? document.getElementsByClassName(name)[0] : document.getElementById(name)
-    }
+    const name = element.substring(1)
+    this.container = (element[0] === '.' ? document.getElementsByClassName(name)[0] : document.getElementById(name)) as HTMLElement
     this.wrapItems()
     this.listenToFullScreenChange()
     this.done()
@@ -52,10 +51,10 @@ class BasicSlider {
   }
 
   protected wrapItems(): void {
-    this.newContainer = this.container.cloneNode()
+    this.newContainer = this.container.cloneNode() as HTMLElement
     this.newContainer.className += ` ${this.containerClass}`
     this.numberOfItems = this.container.children.length
-    let trackWidth: number = this.container.children.length * 100
+    const trackWidth: number = this.container.children.length * 100
     this.newContainer.style.width = this.options.width
     this.markSliderItems()
     this.newContainer.appendChild(this.createTrack(trackWidth))
@@ -71,7 +70,7 @@ class BasicSlider {
   }
 
   protected createTrack(trackWidth: number): HTMLElement {
-    let translateValue: number =
+    const translateValue: number =
       this.options.startAtItem <= this.numberOfItems ? (this.options.startAtItem - 1) / this.numberOfItems * 100 : 0
     this.trackContainer = document.createElement('div')
     this.trackContainer.className = 'rama-slider-track'
@@ -85,10 +84,10 @@ class BasicSlider {
   }
 
   protected createNextButton(): HTMLElement {
-    let { nextButtonClass, nextButtonContent } = this.options
-    let nextWrapper = document.createElement('div')
+    const { nextButtonClass, nextButtonContent } = this.options
+    const nextWrapper = document.createElement('div')
     nextWrapper.className = 'rama-slider-next-wrapper'
-    let nextButton = document.createElement('span')
+    const nextButton = document.createElement('span')
     nextButton.className = nextButtonClass
     nextButton.innerHTML = nextButtonContent
     this.nextButton = nextButton
@@ -105,10 +104,10 @@ class BasicSlider {
   }
 
   protected createPrevButton(): HTMLElement {
-    let { prevButtonClass, prevButtonContent } = this.options
-    let prevWrapper = document.createElement('div')
+    const { prevButtonClass, prevButtonContent } = this.options
+    const prevWrapper = document.createElement('div')
     prevWrapper.className = 'rama-slider-prev-wrapper'
-    let prevButton = document.createElement('span')
+    const prevButton = document.createElement('span')
     prevButton.className = prevButtonClass
     prevButton.innerHTML = prevButtonContent
     this.prevButton = prevButton
@@ -121,7 +120,7 @@ class BasicSlider {
     if (this.isTransitionActive)
       return
     this.toggleTransition()
-    let translateValue: number = 0
+    let translateValue = 0
     this.currentSlide = this.currentSlide < this.numberOfItems ? ++this.currentSlide : 1
     translateValue = (this.currentSlide - 1) / this.numberOfItems * 100
     this.trackContainer.style.transform = `translateX(-${translateValue}%)`
@@ -131,7 +130,7 @@ class BasicSlider {
     if (this.isTransitionActive)
       return
     this.toggleTransition()
-    let translateValue: number = 0
+    let translateValue = 0
     this.currentSlide = this.currentSlide > 1 ? --this.currentSlide : this.numberOfItems
     translateValue = (this.currentSlide - 1) / this.numberOfItems * 100
     this.trackContainer.style.transform = `translateX(-${translateValue}%)`
@@ -154,7 +153,7 @@ class BasicSlider {
     this.newContainer.style.height = 'auto'
   }
 
-  protected prepareAnimation(): void { }
+  protected prepareAnimation(): void {/* do nothing */ }
 }
 
-module.exports = BasicSlider
+export default BasicSlider

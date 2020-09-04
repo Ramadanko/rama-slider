@@ -1,7 +1,7 @@
 import './index.scss'
-const BasicSlider = require('./BasicSlider/BasicSlider')
-const FadeSlider = require('./FadeSlider/FadeSlider')
-const AnimatedSlider = require('./AnimatedSlider/AnimatedSlider')
+import BasicSlider from './BasicSlider'
+import FadeSlider from './FadeSlider'
+import AnimatedSlider from './AnimatedSlider'
 
 const library = {
   BasicSlider,
@@ -9,5 +9,5 @@ const library = {
   AnimatedSlider
 }
 
-//export default library
-module.exports = library
+export default library
+module.exports = library // for browsers
