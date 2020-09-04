@@ -9,9 +9,9 @@ let webpackOptions = {
   target: 'web',
   entry: {
     RamaSlider: './src/index.ts',
-    BasicSlider: './src/BasicSlider/BasicSlider.ts',
-    FadeSlider: './src/FadeSlider/FadeSlider.ts',
-    AnimatedSlider: './src/AnimatedSlider/AnimatedSlider.ts'
+    BasicSlider: './src/BasicSlider/index.ts',
+    FadeSlider: './src/FadeSlider/index.ts',
+    AnimatedSlider: './src/AnimatedSlider/index.ts'
   },
   output,
   plugins,

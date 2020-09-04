@@ -5,7 +5,9 @@
       "DOM",
       "esnext"
     ],
-    "sourceMap": true
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false
   },
   "include": [
     "src/**/*"
