@@ -1,10 +1,11 @@
 import './FadeSlider.scss'
-const BasicSlider = require('../BasicSlider/BasicSlider')
+import BasicSlider from '../BasicSlider/BasicSlider'
+import OptionsInterface from '../BasicSlider/OptionsInterface'
 
 class FadeSlider extends BasicSlider {
 
-  constructor(container: any, options: object) {
-    super(container, options)
+  constructor(elementClassOrId: string, options: OptionsInterface) {
+    super(elementClassOrId, options)
   }
 
   createSliderHtmlClass(): string {
@@ -34,7 +35,7 @@ class FadeSlider extends BasicSlider {
   }
 
   moveToNextItem(): void {
-    let { trackContainer, currentSlide, numberOfItems } = this
+    const { trackContainer, currentSlide, numberOfItems } = this
     trackContainer.children[currentSlide - 1].className = trackContainer.children[currentSlide - 1].className.replace("active", '').trim()
     if (currentSlide === numberOfItems) {
       trackContainer.children[0].className = (trackContainer.children[0].className + ' active').trim()
@@ -53,7 +54,8 @@ class FadeSlider extends BasicSlider {
   }
 
   moveToPrevItem(): void {
-    let { trackContainer, currentSlide, numberOfItems } = this
+    const { trackContainer, numberOfItems } = this
+    let currentSlide = this.currentSlide
     trackContainer.children[currentSlide - 1].className = trackContainer.children[currentSlide - 1].className.replace("active", '').trim()
     if (currentSlide === 1) {
       trackContainer.children[numberOfItems - 1].className = (trackContainer.children[numberOfItems - 1].className + ' active').trim()
@@ -66,4 +68,4 @@ class FadeSlider extends BasicSlider {
   }
 }
 
-module.exports = FadeSlider
+export default FadeSlider
