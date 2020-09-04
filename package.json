@@ -6,13 +6,15 @@
   "scripts": {
     "start:server": "webpack-dev-server",
     "webpack:dev": "webpack -w",
-    "start": "run-p webpack:dev start:server",
+    "start": "run-p webpack:dev start:server lint:watch",
     "clean:build": "rimraf ./build",
     "clean:dist": "rimraf ./dist",
     "prod:env": "cross-env NODE_ENV=production",
     "prebuild": "npm-run-all clean:dist",
     "build": "cross-env NODE_ENV=production webpack",
-    "clear": "run-p clean:build clean:dist"
+    "clear": "run-p clean:build clean:dist",
+    "lint": "esw src/**/*.ts --color --ext .ts --changed --clear",
+    "lint:watch": "npm run lint -- --watch "
   },
   "keywords": [
     "slider",
@@ -31,6 +33,8 @@
     "cross-env": "7.0.2",
     "css-loader": "4.2.2",
     "eslint": "7.7.0",
+    "eslint-watch": "7.0.0",
+    "ghooks": "2.0.4",
     "html-webpack-exclude-assets-plugin": "0.0.7",
     "html-webpack-partials-plugin": "0.6.0",
     "html-webpack-plugin": "4.3.0",
@@ -39,6 +43,7 @@
     "npm-run-all": "4.1.5",
     "rimraf": "3.0.2",
     "sass-loader": "10.0.1",
+    "semantic-release": "^17.1.1",
     "style-loader": "1.2.1",
     "ts-loader": "8.0.3",
     "typescript": "4.0.2",
@@ -51,5 +56,9 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ramadanko/rama-slider.git"
+  }
 }
