@@ -1,6 +1,6 @@
 {
   "name": "rama-slider",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A collection of slideshows with different animations for complex layouts",
   "main": "dist/index.js",
   "scripts": {
