@@ -15,7 +15,7 @@
         width: 10%;
         height: 100%;
         position: relative;
-        transition: top 1s, bottom 1s, opacity 2s;
+        transition: all 1s ease-out
       }
 
       .image-portion:nth-child(odd) {
@@ -36,12 +36,12 @@
     &.StripesIn.animate-items {
       .image-portion:nth-child(odd) {
         top: -100%;
-        opacity: 0;
+        opacity: .75;
       }
 
       .image-portion:nth-child(even) {
         bottom: -100%;
-        opacity: 0;
+        opacity: .75;
       }
     }
   }

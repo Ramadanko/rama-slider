@@ -1,3 +1,4 @@
+import '../index.scss'
 import './AnimatedSlider.scss'
 import FadeSlider from '../FadeSlider/FadeSlider'
 import domToImage from 'dom-to-image'
@@ -10,8 +11,9 @@ class AnimatedSlider extends FadeSlider {
   overlay: HTMLElement
   currentAnimation: string
   animationTimeout = {
-    StripesIn: 1000
+    StripesIn: 1500
   }
+  animatedContainers: Array<HTMLElement> = []
   constructor(elementClassOrId: string, options: OptionsInterface) {
     super(elementClassOrId, options)
   }
@@ -20,15 +22,20 @@ class AnimatedSlider extends FadeSlider {
     return 'rama-slider-animated'
   }
 
+  getTransitionDuration(): number {
+    return 0
+  }
+
   goToNext(): void {
     if (this.isTransitionActive)
       return
     this.toggleTransition()
-    this.overlay.className += ' animate-items'
     this.moveToNextItem()
+    this.prepareAnimation()
+    const currentOverlay = this.animatedContainers.shift()
+    currentOverlay.className += ' animate-items'
     setTimeout(() => {
-      this.overlay.remove()
-      this.prepareAnimation()
+      currentOverlay.remove()
     }, this.animationTimeout[this.currentAnimation])
   }
 
@@ -36,25 +43,29 @@ class AnimatedSlider extends FadeSlider {
     if (this.isTransitionActive)
       return
     this.toggleTransition()
-    this.overlay.className += ' animate-items'
     this.moveToPrevItem()
+    this.prepareAnimation()
+    const currentOverlay = this.animatedContainers.shift()
+    currentOverlay.className += ' animate-items'
     setTimeout(() => {
-      this.overlay.remove()
-      this.prepareAnimation()
+      currentOverlay.remove()
     }, this.animationTimeout[this.currentAnimation])
   }
 
   toggleTransition(): void {
     this.isTransitionActive = true
+    this.toggleButtonsState(true)
     setTimeout(() => {
       this.isTransitionActive = false
-    }, this.animationTimeout[this.currentAnimation] + 750)
+      this.toggleButtonsState(false)
+    }, this.animationTimeout[this.currentAnimation])
   }
 
   takeSnapshot(): void {
-    domToImage.toPng(this.trackContainer)
-      .then(dataUrl => {
-        this.imageUrl = dataUrl
+    domToImage.toBlob(this.trackContainer)
+      .then(blobImage => {
+        const url = URL.createObjectURL(blobImage)
+        this.imageUrl = url
         this.createOverlay()
       })
   }
@@ -62,11 +73,12 @@ class AnimatedSlider extends FadeSlider {
   createOverlay(): void {
     this.currentAnimation = this.options.animations.shift()
     this.options.animations.push(this.currentAnimation)
-    this.overlay = this.overlay ? this.overlay : document.createElement('div')
-    this.overlay.className = `overlay ${this.currentAnimation}`
+    const newOverlay = document.createElement('div')
+    newOverlay.className = `overlay ${this.currentAnimation}`
     const markup = animationMarkups[this.currentAnimation](this.imageUrl)
-    this.overlay.innerHTML = markup// get animated children
-    this.newContainer.appendChild(this.overlay)
+    newOverlay.innerHTML = markup// get animated children
+    this.newContainer.appendChild(newOverlay)
+    this.animatedContainers.push(newOverlay)
   }
 
   prepareAnimation(): void {

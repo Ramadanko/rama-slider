@@ -23,4 +23,8 @@
   color: #1d1d1d;
   background: #fff;
   padding: 5px;
+
+  &.disabled {
+    opacity: .3;
+  }
 }
