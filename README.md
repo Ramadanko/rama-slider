@@ -1,2 +1,2 @@
 # Rama Slider
-Initial phase of rama-slider library
+Initial phase of rama-slider library.
