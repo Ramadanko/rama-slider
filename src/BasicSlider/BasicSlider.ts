@@ -160,6 +160,7 @@ class BasicSlider {
         this.newContainer.className = this.newContainer.className.replace("in-fullScreenMode", '')
     }
   }
+
   protected done(): void {
     this.newContainer.style.display = 'block'
     this.newContainer.style.opacity = '1'
