@@ -1,5 +1,8 @@
+const env = process.env.NODE_ENV;
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+
 const plugins = [
   new HtmlWebpackPlugin({
     filename: 'index.html',
@@ -29,6 +32,11 @@ const plugins = [
     moduleFilename: (chunk) => {
       return chunk.name === 'RamaSlider' ? `${chunk.name}.css` : `${chunk.name}/${chunk.name}.css`
     }
+  }),
+  new CopyPlugin({
+    patterns: [
+      { from: "./src/images", to: "images" }
+    ]
   })
 ]
 
