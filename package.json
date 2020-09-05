@@ -15,7 +15,7 @@
     "clear": "run-p clean:build clean:dist",
     "lint": "esw src/**/*.ts --color --ext .ts --changed",
     "lint:watch": "npm run lint -- --watch --clear",
-    "semantic-release": "semantic-release",
+    "release": "semantic-release",
     "commit": "cz"
   },
   "keywords": [
