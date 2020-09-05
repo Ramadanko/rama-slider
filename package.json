@@ -1,6 +1,6 @@
 {
   "name": "rama-slider",
-  "version": "1.0.1",
+  "version": "0.0.0-development",
   "description": "A collection of slideshows with different animations for complex layouts",
   "main": "dist/index.js",
   "scripts": {
@@ -14,7 +14,9 @@
     "build": "cross-env NODE_ENV=production webpack",
     "clear": "run-p clean:build clean:dist",
     "lint": "esw src/**/*.ts --color --ext .ts --changed",
-    "lint:watch": "npm run lint -- --watch --clear"
+    "lint:watch": "npm run lint -- --watch --clear",
+    "semantic-release": "semantic-release",
+    "commit": "cz"
   },
   "keywords": [
     "slider",
@@ -27,11 +29,15 @@
     "@babel/cli": "7.10.5",
     "@babel/core": "7.11.4",
     "@babel/preset-typescript": "7.10.4",
+    "@commitlint/cli": "9.1.2",
+    "@commitlint/config-conventional": "9.1.2",
     "@typescript-eslint/eslint-plugin": "3.10.1",
     "@typescript-eslint/parser": "3.10.1",
     "clean-webpack-plugin": "3.0.0",
+    "commitizen": "4.2.1",
     "cross-env": "7.0.2",
     "css-loader": "4.2.2",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "7.7.0",
     "eslint-watch": "7.0.0",
     "html-webpack-exclude-assets-plugin": "0.0.7",
@@ -64,10 +70,16 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
     "*{js.ts}": "eslint --color"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
