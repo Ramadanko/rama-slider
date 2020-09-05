@@ -1,7 +1,4 @@
 language: javascript
-cache:
-  directories:
-    - node_modules
 
 node_js:
   - "12.18.1"
