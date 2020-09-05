@@ -1,3 +1,4 @@
+import '../index.scss'
 import './FadeSlider.scss'
 import BasicSlider from '../BasicSlider/BasicSlider'
 import OptionsInterface from '../BasicSlider/OptionsInterface'

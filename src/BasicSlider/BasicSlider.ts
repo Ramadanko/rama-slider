@@ -1,3 +1,4 @@
+import '../index.scss'
 import './BasicSlider.scss'
 import OptionsInterface from './OptionsInterface'
 class BasicSlider {
@@ -83,6 +84,25 @@ class BasicSlider {
     return this.trackContainer
   }
 
+  protected toggleButtonsState(disable: boolean): void {
+    if (disable) {
+      this.nextButton.className += ' disabled'
+      this.prevButton.className += ' disabled'
+    } else {
+      this.nextButton.className = this.nextButton.className.replace('disabled', '').trim()
+      this.prevButton.className = this.prevButton.className.replace('disabled', '').trim()
+    }
+  }
+
+  protected toggleTransition(): void {
+    this.isTransitionActive = true
+    this.toggleButtonsState(true)
+    setTimeout(() => {
+      this.isTransitionActive = false
+      this.toggleButtonsState(false)
+    }, this.options.speed * 1000)
+  }
+
   protected createNextButton(): HTMLElement {
     const { nextButtonClass, nextButtonContent } = this.options
     const nextWrapper = document.createElement('div')
@@ -94,13 +114,6 @@ class BasicSlider {
     nextWrapper.appendChild(nextButton)
     nextButton.onclick = () => { this.goToNext(); }
     return nextWrapper
-  }
-
-  protected toggleTransition(): void {
-    this.isTransitionActive = true
-    setTimeout(() => {
-      this.isTransitionActive = false
-    }, this.options.speed * 1000)
   }
 
   protected createPrevButton(): HTMLElement {

@@ -1,4 +1,5 @@
 const env = process.env.NODE_ENV;
+const minify = env === 'production' ? true : false
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
@@ -13,20 +14,26 @@ const plugins = [
   new HtmlWebpackPlugin({
     filename: 'BasicSlider/BasicSlider.html',
     template: './src/BasicSlider/BasicSlider.html',
-    inject: false,
-    minify: true
+    inject: 'head',
+    minify,
+    chunks: ['BasicSlider'],
+    hash: true
   }),
   new HtmlWebpackPlugin({
     filename: 'FadeSlider/FadeSlider.html',
     template: './src/FadeSlider/FadeSlider.html',
-    inject: false,
-    minify: true
+    inject: 'head',
+    minify,
+    chunks: ['FadeSlider'],
+    hash: true
   }),
   new HtmlWebpackPlugin({
     filename: 'AnimatedSlider/AnimatedSlider.html',
     template: './src/AnimatedSlider/AnimatedSlider.html',
-    inject: false,
-    minify: true
+    inject: 'head',
+    minify,
+    chunks: ['AnimatedSlider'],
+    hash: true
   }),
   new MiniCssExtractPlugin({
     moduleFilename: (chunk) => {
