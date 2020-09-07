@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/Ramadanko/rama-slider/compare/v1.2.1...v1.3.0) (2020-09-07)
+
+
+### Features
+
+* add BoxesOut Animation with necessary refactoring ([77409f6](https://github.com/Ramadanko/rama-slider/commit/77409f63e14c450b6385de4ce78d8f569a2d0283))
+
 ## [1.2.1](https://github.com/Ramadanko/rama-slider/compare/v1.2.0...v1.2.1) (2020-09-05)
 
 
