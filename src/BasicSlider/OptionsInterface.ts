@@ -11,7 +11,8 @@ interface SliderOptions {
   nextButtonContent?: string,
   prevButtonContent?: string,
   prevButtonClass?: string,
-  animations?: Array<string>
+  animations?: Array<string>,
+  animationSpeed: number
 }
 
 export default SliderOptions

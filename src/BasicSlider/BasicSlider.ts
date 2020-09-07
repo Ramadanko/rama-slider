@@ -26,7 +26,8 @@ class BasicSlider {
     nextButtonContent: 'Next',
     prevButtonContent: 'Prev',
     prevButtonClass: 'rama-slider-prev',
-    animations: ['StripesIn'] //'StripesOut', 'SquaresIn', 'SquaresOut'
+    animations: ['StripesOut'], // 'StripesIn', 'StripesOut', 'BoxesOut', 'BoxesIn',
+    animationSpeed: 1
   };
 
   constructor(container: string, options: OptionsInterface) {
@@ -53,7 +54,7 @@ class BasicSlider {
 
   protected wrapItems(): void {
     this.newContainer = this.container.cloneNode() as HTMLElement
-    this.newContainer.className += ` ${this.containerClass}`
+    this.newContainer.className += ` rama-slider ${this.containerClass}`
     this.numberOfItems = this.container.children.length
     const trackWidth: number = this.container.children.length * 100
     this.newContainer.style.width = this.options.width

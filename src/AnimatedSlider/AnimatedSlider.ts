@@ -10,9 +10,6 @@ class AnimatedSlider extends FadeSlider {
   imageUrl: string
   overlay: HTMLElement
   currentAnimation: string
-  animationTimeout = {
-    StripesIn: 1500
-  }
   animatedContainers: Array<HTMLElement> = []
   constructor(elementClassOrId: string, options: OptionsInterface) {
     super(elementClassOrId, options)
@@ -36,7 +33,7 @@ class AnimatedSlider extends FadeSlider {
     currentOverlay.className += ' animate-items'
     setTimeout(() => {
       currentOverlay.remove()
-    }, this.animationTimeout[this.currentAnimation])
+    }, this.options.animationSpeed * 1000 + 100)
   }
 
   goToPrev(): void {
@@ -49,7 +46,7 @@ class AnimatedSlider extends FadeSlider {
     currentOverlay.className += ' animate-items'
     setTimeout(() => {
       currentOverlay.remove()
-    }, this.animationTimeout[this.currentAnimation])
+    }, this.options.animationSpeed * 1000 + 100)
   }
 
   toggleTransition(): void {
@@ -58,7 +55,7 @@ class AnimatedSlider extends FadeSlider {
     setTimeout(() => {
       this.isTransitionActive = false
       this.toggleButtonsState(false)
-    }, this.animationTimeout[this.currentAnimation])
+    }, this.options.animationSpeed * 1000 + 100)
   }
 
   takeSnapshot(): void {
@@ -71,11 +68,12 @@ class AnimatedSlider extends FadeSlider {
   }
 
   createOverlay(): void {
+    const { imageUrl, newContainer } = this;
     this.currentAnimation = this.options.animations.shift()
     this.options.animations.push(this.currentAnimation)
     const newOverlay = document.createElement('div')
     newOverlay.className = `overlay ${this.currentAnimation}`
-    const markup = animationMarkups[this.currentAnimation](this.imageUrl)
+    const markup = animationMarkups[this.currentAnimation](imageUrl, newContainer, this.options.animationSpeed)
     newOverlay.innerHTML = markup// get animated children
     this.newContainer.appendChild(newOverlay)
     this.animatedContainers.push(newOverlay)
