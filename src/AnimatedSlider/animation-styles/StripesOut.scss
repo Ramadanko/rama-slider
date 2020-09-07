@@ -1,0 +1,33 @@
+.overlay {
+  &.StripesOut {
+    .image-portion {
+      width: 10%;
+      height: 100%;
+      position: relative;
+      transition: top ease-out, bottom ease-out, opacity linear;
+    }
+
+    .image-portion:nth-child(odd) {
+      top: 0;
+      opacity: 1;
+    }
+
+    .image-portion:nth-child(even) {
+      bottom: 0;
+      opacity: 1;
+    }
+  }
+
+  &.StripesOut.animate-items {
+    .image-portion:nth-child(odd) {
+      top: -100%;
+      opacity: .75;
+    }
+
+    .image-portion:nth-child(even) {
+      bottom: -100%;
+      opacity: .75;
+    }
+  }
+
+}
