@@ -13,6 +13,7 @@ class BasicSlider {
   protected numberOfItems: number
   protected currentSlide: number
   protected isTransitionActive = false
+  savedSlides: any
   protected options: OptionsInterface = {
     width: '600px',
     speed: .5,
@@ -34,6 +35,7 @@ class BasicSlider {
     this.elementClassOrId = container
     this.options = Object.assign(this.options, options)
     this.currentSlide = this.options.startAtItem
+    this.savedSlides = {}
     this.init()
   }
 

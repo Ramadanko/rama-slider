@@ -29,30 +29,30 @@ class AnimatedSlider extends FadeSlider {
   goToNext(): void {
     if (this.isTransitionActive)
       return
-    this.toggleTransition()
+    this.toggleTransitionState()
     this.moveToNextItem()
     this.prepareAnimation()
     const currentOverlay = this.animatedContainers.shift()
     currentOverlay.className += ' animate-items'
     setTimeout(() => {
       currentOverlay.remove()
-    }, this.options.animationSpeed * 1000 + 100)
+    }, this.options.animationSpeed * 1000 )
   }
 
   goToPrev(): void {
     if (this.isTransitionActive)
       return
-    this.toggleTransition()
+    this.toggleTransitionState()
     this.moveToPrevItem()
     this.prepareAnimation()
     const currentOverlay = this.animatedContainers.shift()
     currentOverlay.className += ' animate-items'
     setTimeout(() => {
       currentOverlay.remove()
-    }, this.options.animationSpeed * 1000 + 100)
+    }, this.options.animationSpeed * 1000)
   }
 
-  toggleTransition(): void {
+  toggleTransitionState(): void {
     this.isTransitionActive = true
     this.toggleButtonsState(true)
     setTimeout(() => {
@@ -62,12 +62,18 @@ class AnimatedSlider extends FadeSlider {
   }
 
   takeSnapshot(): void {
-    domToImage.toBlob(this.trackContainer)
-      .then(blobImage => {
+    if( !this.savedSlides[this.currentSlide]){
+      domToImage.toBlob(this.trackContainer)
+      .then((blobImage: Blob) => {
         const url = URL.createObjectURL(blobImage)
+        this.savedSlides[this.currentSlide] = url
         this.imageUrl = url
         this.createOverlay()
       })
+    }else{
+      this.imageUrl = this.savedSlides[this.currentSlide]
+      this.createOverlay()
+    } 
   }
 
   createOverlay(): void {
@@ -81,14 +87,21 @@ class AnimatedSlider extends FadeSlider {
     this.newContainer.appendChild(newOverlay)
     this.animatedContainers.push(newOverlay)
     if( !this.initialized){
-      this.initialized = true
-      this.isTransitionActive = false
-      this.toggleButtonsState(false)
+      this.enableInteractions()
     }
+
   }
 
   prepareAnimation(): void {
     this.takeSnapshot()
+  }
+
+  enableInteractions(): void{
+    setTimeout(() => {
+      this.initialized = true
+      this.toggleButtonsState(false)
+      this.isTransitionActive = false
+    },0)
   }
 
 }
