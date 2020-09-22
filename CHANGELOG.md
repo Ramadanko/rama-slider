@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/Ramadanko/rama-slider/compare/v1.3.1...v1.3.2) (2020-09-22)
+
+
+### Bug Fixes
+
+* delay AnimatedSlider Reaedy state for user interaction ([4a9a6b5](https://github.com/Ramadanko/rama-slider/commit/4a9a6b5da7f2f11a65fd2a1e158fe3ee7c4479de))
+
 ## [1.3.1](https://github.com/Ramadanko/rama-slider/compare/v1.3.0...v1.3.1) (2020-09-22)
 
 
