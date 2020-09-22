@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/Ramadanko/rama-slider/compare/v1.3.0...v1.3.1) (2020-09-22)
+
+
+### Bug Fixes
+
+* fix for AnimatedSlider to enable next&prev buttons after snapshot process finishes ([010d442](https://github.com/Ramadanko/rama-slider/commit/010d44277dcc495cd8e5cbf23c4966057ba34c06))
+
 # [1.3.0](https://github.com/Ramadanko/rama-slider/compare/v1.2.1...v1.3.0) (2020-09-07)
 
 
