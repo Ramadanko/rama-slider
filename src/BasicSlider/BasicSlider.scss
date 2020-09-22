@@ -3,6 +3,7 @@
   position: relative;
   opacity: 0;
   height: 0px;
+  display:none;
   transition: opacity .5s;
 
   &.rama-slider-basic {
