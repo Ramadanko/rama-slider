@@ -11,8 +11,11 @@ class AnimatedSlider extends FadeSlider {
   overlay: HTMLElement
   currentAnimation: string
   animatedContainers: Array<HTMLElement> = []
+  initialized = false
   constructor(elementClassOrId: string, options: OptionsInterface) {
     super(elementClassOrId, options)
+    this.isTransitionActive = true
+    this.toggleButtonsState(true)
   }
 
   createSliderHtmlClass(): string {
@@ -77,6 +80,11 @@ class AnimatedSlider extends FadeSlider {
     newOverlay.innerHTML = markup// get animated children
     this.newContainer.appendChild(newOverlay)
     this.animatedContainers.push(newOverlay)
+    if( !this.initialized){
+      this.initialized = true
+      this.isTransitionActive = false
+      this.toggleButtonsState(false)
+    }
   }
 
   prepareAnimation(): void {
