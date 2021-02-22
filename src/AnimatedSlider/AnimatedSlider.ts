@@ -32,7 +32,7 @@ class AnimatedSlider extends FadeSlider {
     this.toggleTransitionState()
     this.moveToNextItem()
     this.prepareAnimation()
-    this.overlayElement.className += ' animate-items'
+    this.overlayElement.classList.add('animate-items');
   }
 
   goToPrev(): void {
@@ -41,7 +41,7 @@ class AnimatedSlider extends FadeSlider {
     this.toggleTransitionState()
     this.moveToPrevItem()
     this.prepareAnimation()
-    this.overlayElement.className += ' animate-items'
+    this.overlayElement.classList.add('animate-items');
   }
 
   /**
@@ -52,7 +52,7 @@ class AnimatedSlider extends FadeSlider {
     this.toggleButtonsState(true)
     setTimeout(() => {
       this.updateOverlay();
-      this.enableInteractions(250);
+      this.enableInteractions(500);
     }, this.options.animationSpeed * 1000 + 500)
   }
 
@@ -78,11 +78,17 @@ class AnimatedSlider extends FadeSlider {
    */
   updateOverlay(): void {
     const { imageUrl, newContainer } = this;
-    this.currentAnimation = this.options.animations.shift()
-    this.options.animations = [...this.options.animations, this.currentAnimation]
-    this.overlayElement.className = `overlay ${this.currentAnimation}`
-    const markup = animationMarkups[this.currentAnimation](imageUrl, newContainer, this.options.animationSpeed)
-    this.overlayElement.innerHTML = markup// get animated children
+    setTimeout(() => this.overlayElement.classList.remove('animate-items', this.currentAnimation))
+
+    setTimeout(() => {
+      this.currentAnimation = this.options.animations.shift()
+      this.options.animations = [...this.options.animations, this.currentAnimation]
+    })
+    this.overlayElement.innerHTML = '';
+    setTimeout(() => {
+      this.overlayElement.innerHTML = animationMarkups[this.currentAnimation](imageUrl, newContainer, this.options.animationSpeed)
+      this.overlayElement.classList.add(this.currentAnimation);
+    }, 100)
   }
 
   /**
@@ -96,7 +102,7 @@ class AnimatedSlider extends FadeSlider {
   /**
    * @description enable user interaction after overlay element to be animated
    */
-  enableInteractions(timeout= 100): void {
+  enableInteractions(timeout = 100): void {
     setTimeout(() => {
       this.toggleButtonsState(false)
       this.isTransitionActive = false;
