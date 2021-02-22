@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/Ramadanko/rama-slider/compare/v1.3.2...v1.3.3) (2021-02-22)
+
+
+### Bug Fixes
+
+* **component:** fix text selection & animation transition for AnimatedSlider ([#18](https://github.com/Ramadanko/rama-slider/issues/18)) ([cc230e6](https://github.com/Ramadanko/rama-slider/commit/cc230e607f5ce59eca7692bd3fee0d0e9335f079))
+
 ## [1.3.2](https://github.com/Ramadanko/rama-slider/compare/v1.3.1...v1.3.2) (2020-09-22)
 
 
