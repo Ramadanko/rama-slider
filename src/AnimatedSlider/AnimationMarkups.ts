@@ -14,7 +14,7 @@ const BoxesOut = (imageUrl: string, container?: HTMLElement, animationSpeed?: nu
   const boxHeight = (100 / boxes).toFixed(1)
   const backgroundSize = '1000% ' + boxes * 100 + '%'
   styles = `background-repeat:no-repeat;background-image: url(${imageUrl});background-size:${backgroundSize};
-  float:left;width: 10%;height:${boxHeight}%;transition-duration:${animationSpeed}s;transition:delay: .05s;`
+  float:left;width: 10%;height:${boxHeight}%;transition-duration:${animationSpeed}s;transition-delay: .05s;`
   let x, y = 0, xCounter = 0
   for (let i = 0; i < boxes * 10; i++) {
     if (i % 10 === 0 && i !== 0) {
