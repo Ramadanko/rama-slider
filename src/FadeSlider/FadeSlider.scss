@@ -22,8 +22,8 @@
 
         &.active {
           opacity: 1;
-          z-index: 30;
-          position: static;
+          z-index: 30 !important;
+          position: relative;
         }
 
         &>* {

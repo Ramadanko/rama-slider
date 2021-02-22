@@ -13,7 +13,7 @@ class BasicSlider {
   protected numberOfItems: number
   protected currentSlide: number
   protected isTransitionActive = false
-  savedSlides: any
+  savedSlides: Record<number, string>
   protected options: OptionsInterface = {
     width: '600px',
     speed: .5,
