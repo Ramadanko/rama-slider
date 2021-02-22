@@ -10,10 +10,11 @@ class BasicSlider {
   protected trackContainer: HTMLElement
   protected nextButton: HTMLElement
   protected prevButton: HTMLElement
+  protected overlayElement: HTMLElement
   protected numberOfItems: number
   protected currentSlide: number
   protected isTransitionActive = false
-  savedSlides: Record<number, string>
+  protected savedSlides: Record<number, string>
   protected options: OptionsInterface = {
     width: '600px',
     speed: .5,
@@ -64,6 +65,7 @@ class BasicSlider {
     this.newContainer.appendChild(this.createTrack(trackWidth))
     this.newContainer.appendChild(this.createNextButton())
     this.newContainer.appendChild(this.createPrevButton())
+    this.newContainer.appendChild(this.createOverlay());
     this.container.replaceWith(this.newContainer)
   }
 
@@ -132,6 +134,13 @@ class BasicSlider {
     return prevWrapper
   }
 
+  protected createOverlay(): HTMLElement{
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    this.overlayElement = overlay;
+    return overlay;
+  }
+
   goToNext(): void {
     if (this.isTransitionActive)
       return
@@ -170,6 +179,9 @@ class BasicSlider {
     this.newContainer.style.height = 'auto'
   }
 
+  /**
+   * @description prepare animation for child class
+   */
   protected prepareAnimation(): void {/* do nothing */ }
 }
 

@@ -32,11 +32,7 @@ class AnimatedSlider extends FadeSlider {
     this.toggleTransitionState()
     this.moveToNextItem()
     this.prepareAnimation()
-    const currentOverlay = this.animatedContainers.shift()
-    currentOverlay.className += ' animate-items'
-    setTimeout(() => {
-      currentOverlay.remove()
-    }, this.options.animationSpeed * 1000)
+    this.overlayElement.className += ' animate-items'
   }
 
   goToPrev(): void {
@@ -45,19 +41,18 @@ class AnimatedSlider extends FadeSlider {
     this.toggleTransitionState()
     this.moveToPrevItem()
     this.prepareAnimation()
-    const currentOverlay = this.animatedContainers.shift()
-    currentOverlay.className += ' animate-items'
-    setTimeout(() => {
-      currentOverlay.remove()
-    }, this.options.animationSpeed * 1000)
+    this.overlayElement.className += ' animate-items'
   }
 
+  /**
+   * @description disable prev & next buttons interactions
+   */
   toggleTransitionState(): void {
     this.isTransitionActive = true
     this.toggleButtonsState(true)
     setTimeout(() => {
-      this.isTransitionActive = false
-      this.toggleButtonsState(false)
+      this.updateOverlay();
+      this.enableInteractions(250);
     }, this.options.animationSpeed * 1000 + 500)
   }
 
@@ -70,48 +65,54 @@ class AnimatedSlider extends FadeSlider {
         .then((blobImage: Blob) => {
           const url = URL.createObjectURL(blobImage)
           this.savedSlides[this.currentSlide] = url
-          this.imageUrl = url
-          this.createOverlay()
+          this.imageUrl = url;
+          this.firstLaunch();
         })
     } else {
       this.imageUrl = this.savedSlides[this.currentSlide]
-      this.createOverlay()
     }
   }
 
   /**
-   * @description create an overlay slide item for the active to be animated
+   * @description create an overlay slide item for the next slide to be animated
    */
-  createOverlay(): void {
+  updateOverlay(): void {
     const { imageUrl, newContainer } = this;
     this.currentAnimation = this.options.animations.shift()
     this.options.animations = [...this.options.animations, this.currentAnimation]
-    const newOverlay = document.createElement('div')
-    newOverlay.className = `overlay ${this.currentAnimation}`
+    this.overlayElement.className = `overlay ${this.currentAnimation}`
     const markup = animationMarkups[this.currentAnimation](imageUrl, newContainer, this.options.animationSpeed)
-    newOverlay.innerHTML = markup// get animated children
-    this.newContainer.appendChild(newOverlay)
-    this.animatedContainers = [...this.animatedContainers, newOverlay];
-    if (!this.initialized) {
-      this.enableInteractions()
-    }
+    this.overlayElement.innerHTML = markup// get animated children
   }
 
   /**
-   * called by init function from BasicSlider class
+   * @description
+   * - called by init function from BasicSlider class on initialization
    */
   prepareAnimation(): void {
     this.takeSnapshot()
   }
 
-  enableInteractions(): void {
+  /**
+   * @description enable user interaction after overlay element to be animated
+   */
+  enableInteractions(timeout= 100): void {
     setTimeout(() => {
-      this.initialized = true
       this.toggleButtonsState(false)
-      this.isTransitionActive = false
-    }, 0)
+      this.isTransitionActive = false;
+    }, timeout);
   }
 
+  /**
+   * @description runs once after creating first snapshot
+   */
+  firstLaunch(): void {
+    if (!this.initialized) {
+      this.initialized = true;
+      this.updateOverlay();
+      this.enableInteractions()
+    }
+  }
 }
 
 export default AnimatedSlider
