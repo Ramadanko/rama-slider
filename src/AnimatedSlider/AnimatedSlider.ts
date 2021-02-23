@@ -29,19 +29,19 @@ class AnimatedSlider extends FadeSlider {
   goToNext(): void {
     if (this.isTransitionActive)
       return
-    this.toggleTransitionState()
     this.moveToNextItem()
-    this.prepareAnimation()
     this.overlayElement.classList.add('animate-items');
+    this.toggleTransitionState()
+    this.prepareAnimation()
   }
 
   goToPrev(): void {
     if (this.isTransitionActive)
       return
-    this.toggleTransitionState()
     this.moveToPrevItem()
-    this.prepareAnimation()
     this.overlayElement.classList.add('animate-items');
+    this.toggleTransitionState()
+    this.prepareAnimation()
   }
 
   /**
@@ -53,15 +53,22 @@ class AnimatedSlider extends FadeSlider {
     setTimeout(() => {
       this.updateOverlay();
       this.enableInteractions(500);
-    }, this.options.animationSpeed * 1000 + 500)
+    }, this.options.animationSpeed * 1000 + 100)
   }
 
   /**
    * @description create snapshot image for each silde
    */
   takeSnapshot(): void {
+    //console.log('activeElement', this.activeElement);
+    //console.log('this.currentSlide', this.currentSlide);
+    const element = this.activeElement ? this.activeElement : this.trackContainer.children[0];
+    //console.log('element', element);
     if (!this.savedSlides[this.currentSlide]) {
-      domToImage.toBlob(this.trackContainer)
+      //console.log('activeElement', this.trackContainer.children[this.currentSlide - 1])
+      //domToImage.toBlob(this.trackContainer)
+      //domToImage.toBlob(this.trackContainer.children[this.currentSlide - 1])
+      domToImage.toBlob(element)
         .then((blobImage: Blob) => {
           const url = URL.createObjectURL(blobImage)
           this.savedSlides[this.currentSlide] = url
@@ -77,16 +84,16 @@ class AnimatedSlider extends FadeSlider {
    * @description create an overlay slide item for the next slide to be animated
    */
   updateOverlay(): void {
-    const { imageUrl, newContainer } = this;
-    setTimeout(() => this.overlayElement.classList.remove('animate-items', this.currentAnimation))
-
+    // console.log('updateOverlay ==>>',this.currentSlide)
+    // console.log('updateOverlay ==>>',this.savedSlides)
+    const { newContainer } = this;
+    //this.overlayElement.classList.remove('animate-items', this.currentAnimation)
+    this.currentAnimation = this.options.animations.splice(0, 1)[0];
+    this.options.animations = [...this.options.animations, this.currentAnimation]
+    this.overlayElement.replaceWith(this.createOverlay());
     setTimeout(() => {
-      this.currentAnimation = this.options.animations.shift()
-      this.options.animations = [...this.options.animations, this.currentAnimation]
-    })
-    this.overlayElement.innerHTML = '';
-    setTimeout(() => {
-      this.overlayElement.innerHTML = animationMarkups[this.currentAnimation](imageUrl, newContainer, this.options.animationSpeed)
+      const blobUrl = this.savedSlides[this.currentSlide];
+      this.overlayElement.innerHTML = animationMarkups[this.currentAnimation](blobUrl, newContainer, this.options.animationSpeed)
       this.overlayElement.classList.add(this.currentAnimation);
     }, 100)
   }
@@ -116,7 +123,7 @@ class AnimatedSlider extends FadeSlider {
     if (!this.initialized) {
       this.initialized = true;
       this.updateOverlay();
-      this.enableInteractions()
+      this.enableInteractions(1000)
     }
   }
 }
