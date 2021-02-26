@@ -53,19 +53,43 @@ class AnimatedSlider extends FadeSlider {
     setTimeout(() => {
       this.updateOverlay();
       this.enableInteractions(500);
-    }, this.options.animationSpeed * 1000 + 500)
+    }, this.options.animationSpeed * 1000 + 1000)
   }
 
   /**
    * @description create snapshot image for each silde
    */
   takeSnapshot(): void {
+    const ramaId = this.newContainer.getAttribute('data-rama-id')
     if (!this.savedSlides[this.currentSlide]) {
-      domToImage.toBlob(this.trackContainer)
-        .then((blobImage: Blob) => {
-          const url = URL.createObjectURL(blobImage)
-          this.savedSlides[this.currentSlide] = url
-          this.imageUrl = url;
+      // domToImage.toBlob(this.trackContainer)
+      //   .then((blobImage: Blob) => {
+      //     const url = URL.createObjectURL(blobImage)
+      //     this.savedSlides[this.currentSlide] = url
+      //     this.imageUrl = url;
+      //     this.firstLaunch();
+      //   })
+      domToImage.toPng(this.trackContainer)
+        .then((base64Image: string) => {
+          console.log('base64Image', base64Image)
+          const cssStyle = `.image-portion{
+            background-image: url("${base64Image}")
+          }`;
+          const cssFile = new Blob( [cssStyle], {type: 'text/css'})
+          const cssFileUrl = URL.createObjectURL(cssFile);
+          const linkTag = document.createElement('link');
+          linkTag.rel = 'stylesheet';
+          linkTag.type = 'text/css';
+          linkTag.href = cssFileUrl;
+          //console.log('cssFileUrl', cssFileUrl)
+          document.body.appendChild(linkTag)
+          // const style = document.createElement('style')
+          // style.innerHTML = `
+          // .image-portion{
+          //   background-image: url("${base64Image}")
+          // }
+          // `;
+          //document.body.appendChild(style)
           this.firstLaunch();
         })
     } else {

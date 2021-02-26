@@ -58,6 +58,7 @@ class BasicSlider {
   protected wrapItems(): void {
     this.newContainer = this.container.cloneNode() as HTMLElement
     this.newContainer.className += ` rama-slider ${this.containerClass}`
+    this.newContainer.setAttribute('data-rama-id', `rama-id-${new Date().getTime()}`)
     this.numberOfItems = this.container.children.length
     const trackWidth: number = this.container.children.length * 100
     this.newContainer.style.width = this.options.width
