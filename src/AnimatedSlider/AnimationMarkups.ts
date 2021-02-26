@@ -1,7 +1,11 @@
 function StripesOut(imageUrl: string, container?: HTMLElement, animationSpeed?: number): string {
   let markup = '';
-  const styles = `background-size: 1000% 100%; background-image: url(${imageUrl}); transition-delay: .05s;
-  background-repeat: no-repeat; transition-duration:${animationSpeed}s; background-position:`;
+  const styles = `
+  background-size: 1000% 100%;
+  transition-delay: .05s;
+  background-repeat: no-repeat;
+  transition-duration:${animationSpeed}s;
+  background-position:`;
   for (let i = 0; i < 10; i++) {
     markup += `<div class="image-portion" style="${styles}${(i * 11.1).toFixed(1)}% 0px; float:left"></div>`
   }
@@ -13,8 +17,14 @@ const BoxesOut = (imageUrl: string, container?: HTMLElement, animationSpeed?: nu
   const boxes = container.offsetHeight <= 650 ? 3 : 4
   const boxHeight = (100 / boxes).toFixed(1)
   const backgroundSize = '1000% ' + boxes * 100 + '%'
-  styles = `background-repeat:no-repeat;background-image: url(${imageUrl});background-size:${backgroundSize};
-  float:left;width: 10%;height:${boxHeight}%;transition-duration:${animationSpeed}s;transition-delay: .05s;`
+  styles = `
+  background-repeat:no-repeat;
+  background-size:${backgroundSize};
+  float:left;
+  width: 10%;
+  height:${boxHeight}%;
+  transition-duration:${animationSpeed}s;
+  transition-delay: .05s;`;
   let x, y = 0, xCounter = 0
   for (let i = 0; i < boxes * 10; i++) {
     if (i % 10 === 0 && i !== 0) {

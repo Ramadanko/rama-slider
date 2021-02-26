@@ -12,6 +12,7 @@ class AnimatedSlider extends FadeSlider {
   currentAnimation: string
   animatedContainers: Array<HTMLElement> = []
   initialized = false
+  imagePreload = document.createElement('img');
   constructor(elementClassOrId: string, options: OptionsInterface) {
     super(elementClassOrId, options)
     this.isTransitionActive = true
@@ -66,12 +67,25 @@ class AnimatedSlider extends FadeSlider {
    */
   takeSnapshot(): void {
     if (!this.savedSlides[this.currentSlide]) {
-      domToImage.toBlob(this.trackContainer)
+      console.log('this.trackContainer', this.trackContainer.children[this.currentSlide - 1])
+      //domToImage.toBlob(this.trackContainer)
+      domToImage.toBlob(this.trackContainer.children[this.currentSlide - 1])
         .then((blobImage: Blob) => {
           const url = URL.createObjectURL(blobImage)
+          this.imagePreload.onload = () => {
+            console.log('image-loaded');
+            this.createOverlay();
+          }
+          this.imagePreload.src = url;
+          this.imagePreload.style.display = 'none';
+          document.body.appendChild(this.imagePreload);
+          const cssStyle = `.overlay-number-${this.currentSlide} .image-portion{background-image: url("${url}")}`;
+          const style = document.createElement('style')
+          style.innerHTML = cssStyle;
+          document.body.appendChild(style);
+
           this.savedSlides[this.currentSlide] = url
-          this.imageUrl = url
-          this.createOverlay()
+          // this.imageUrl = url
         })
     } else {
       this.imageUrl = this.savedSlides[this.currentSlide]
@@ -83,11 +97,11 @@ class AnimatedSlider extends FadeSlider {
    * @description create an overlay slide item for the active to be animated
    */
   createOverlay(): void {
-    const { imageUrl, newContainer } = this;
+    const { imageUrl, newContainer, currentSlide } = this;
     this.currentAnimation = this.options.animations.shift()
     this.options.animations = [...this.options.animations, this.currentAnimation]
     const newOverlay = document.createElement('div')
-    newOverlay.className = `overlay ${this.currentAnimation}`
+    newOverlay.className = `overlay ${this.currentAnimation} ${newContainer.getAttribute('data-rama-id')} overlay-number-${currentSlide}`
     const markup = animationMarkups[this.currentAnimation](imageUrl, newContainer, this.options.animationSpeed)
     newOverlay.innerHTML = markup// get animated children
     this.newContainer.appendChild(newOverlay)
