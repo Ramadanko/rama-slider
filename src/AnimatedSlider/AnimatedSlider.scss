@@ -17,6 +17,10 @@
     &.animate-items {
       z-index: 90;
     }
+
+    .image-portion{
+      background-repeat: no-repeat;
+    }
   }
 
   @import "./animation-styles/StripesOut.scss";
