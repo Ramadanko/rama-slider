@@ -1,9 +1,8 @@
-function StripesOut(imageUrl: string, container?: HTMLElement, animationSpeed?: number): string {
+function StripesOut(container?: HTMLElement, animationSpeed?: number): string {
   let markup = '';
   const styles = `
   background-size: 1000% 100%;
   transition-delay: .05s;
-  background-repeat: no-repeat;
   transition-duration:${animationSpeed}s;
   background-position:`;
   for (let i = 0; i < 10; i++) {
@@ -12,13 +11,12 @@ function StripesOut(imageUrl: string, container?: HTMLElement, animationSpeed?: 
   return markup
 }
 
-const BoxesOut = (imageUrl: string, container?: HTMLElement, animationSpeed?: number): string => {
+const BoxesOut = (container?: HTMLElement, animationSpeed?: number): string => {
   let markup = '', styles = ''
   const boxes = container.offsetHeight <= 650 ? 3 : 4
   const boxHeight = (100 / boxes).toFixed(1)
   const backgroundSize = '1000% ' + boxes * 100 + '%'
   styles = `
-  background-repeat:no-repeat;
   background-size:${backgroundSize};
   float:left;
   width: 10%;

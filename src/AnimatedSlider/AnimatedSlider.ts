@@ -17,6 +17,7 @@ class AnimatedSlider extends FadeSlider {
     super(elementClassOrId, options)
     this.isTransitionActive = true
     this.toggleButtonsState(true)
+    this.insertImagePreloader()
   }
 
   createSliderHtmlClass(): string {
@@ -27,6 +28,41 @@ class AnimatedSlider extends FadeSlider {
     return 0
   }
 
+  /**
+   * @description create image preloader to load snapshot images before animation transition
+   */
+  insertImagePreloader(): void {
+    const styles = `position: absolute; z-index: -100; left: -100%; visibility:hidden`
+    this.imagePreload.setAttribute('style', styles)
+    document.body.appendChild(this.imagePreload)
+  }
+
+  /**
+   * @description load snapshot image before animation transition
+   * @param url String: snapshot image url saved in memory
+   */
+  loadSnapshotImage(url: string): void {
+    this.imagePreload.onload = () => {
+      this.createOverlay();
+    }
+    this.imagePreload.src = url
+  }
+
+  /**
+   * @description create & insert css rules for each snapshot image
+   * @param url String: snpashot image url
+   */
+  insertCssStyles(url: string): void {
+    const sliderId = this.newContainer.getAttribute('data-rama-id')
+    const cssStyle = `.overlay-number-${this.currentSlide}.${sliderId} .image-portion{background-image: url("${url}")}`
+    const style = document.createElement('style')
+    style.innerHTML = cssStyle
+    document.body.appendChild(style)
+  }
+
+  /**
+   * @description navigation to next slider
+   */
   goToNext(): void {
     if (this.isTransitionActive)
       return
@@ -34,12 +70,15 @@ class AnimatedSlider extends FadeSlider {
     this.moveToNextItem()
     this.prepareAnimation()
     const currentOverlay = this.animatedContainers.shift()
-    currentOverlay.className += ' animate-items'
+    currentOverlay.classList.add('animate-items')
     setTimeout(() => {
       currentOverlay.remove()
     }, this.options.animationSpeed * 1000)
   }
 
+  /**
+   * @description navigate to previous slider
+   */
   goToPrev(): void {
     if (this.isTransitionActive)
       return
@@ -47,19 +86,22 @@ class AnimatedSlider extends FadeSlider {
     this.moveToPrevItem()
     this.prepareAnimation()
     const currentOverlay = this.animatedContainers.shift()
-    currentOverlay.className += ' animate-items'
+    currentOverlay.classList.add('animate-items')
     setTimeout(() => {
       currentOverlay.remove()
     }, this.options.animationSpeed * 1000)
   }
 
+  /**
+   * @description disable user interaction during animation transition
+   */
   toggleTransitionState(): void {
     this.isTransitionActive = true
     this.toggleButtonsState(true)
     setTimeout(() => {
       this.isTransitionActive = false
       this.toggleButtonsState(false)
-    }, this.options.animationSpeed * 1000 + 500)
+    }, this.options.animationSpeed * 1000 + 100)
   }
 
   /**
@@ -67,48 +109,32 @@ class AnimatedSlider extends FadeSlider {
    */
   takeSnapshot(): void {
     if (!this.savedSlides[this.currentSlide]) {
-      console.log('this.trackContainer', this.trackContainer.children[this.currentSlide - 1])
-      //domToImage.toBlob(this.trackContainer)
       domToImage.toBlob(this.trackContainer.children[this.currentSlide - 1])
         .then((blobImage: Blob) => {
           const url = URL.createObjectURL(blobImage)
-          this.imagePreload.onload = () => {
-            console.log('image-loaded');
-            this.createOverlay();
-          }
-          this.imagePreload.src = url;
-          this.imagePreload.style.display = 'none';
-          document.body.appendChild(this.imagePreload);
-          const cssStyle = `.overlay-number-${this.currentSlide} .image-portion{background-image: url("${url}")}`;
-          const style = document.createElement('style')
-          style.innerHTML = cssStyle;
-          document.body.appendChild(style);
-
+          this.loadSnapshotImage(url)
+          this.insertCssStyles(url)
           this.savedSlides[this.currentSlide] = url
-          // this.imageUrl = url
         })
     } else {
-      this.imageUrl = this.savedSlides[this.currentSlide]
       this.createOverlay()
     }
   }
 
   /**
-   * @description create an overlay slide item for the active to be animated
+   * @description create an overlay slide item for the active slide item to be animated
    */
   createOverlay(): void {
-    const { imageUrl, newContainer, currentSlide } = this;
+    const { newContainer, currentSlide } = this;
     this.currentAnimation = this.options.animations.shift()
     this.options.animations = [...this.options.animations, this.currentAnimation]
+
     const newOverlay = document.createElement('div')
     newOverlay.className = `overlay ${this.currentAnimation} ${newContainer.getAttribute('data-rama-id')} overlay-number-${currentSlide}`
-    const markup = animationMarkups[this.currentAnimation](imageUrl, newContainer, this.options.animationSpeed)
-    newOverlay.innerHTML = markup// get animated children
+    const animatedElements = animationMarkups[this.currentAnimation](newContainer, this.options.animationSpeed)
+    newOverlay.innerHTML = animatedElements
     this.newContainer.appendChild(newOverlay)
     this.animatedContainers = [...this.animatedContainers, newOverlay];
-    if (!this.initialized) {
-      this.enableInteractions()
-    }
   }
 
   /**
@@ -116,14 +142,18 @@ class AnimatedSlider extends FadeSlider {
    */
   prepareAnimation(): void {
     this.takeSnapshot()
+    if (!this.initialized) {
+      setTimeout(() => this.enableInteractions())
+    }
   }
 
+  /**
+   * @description enable user interaction to navigate between slides
+   */
   enableInteractions(): void {
-    setTimeout(() => {
-      this.initialized = true
-      this.toggleButtonsState(false)
-      this.isTransitionActive = false
-    }, 0)
+    this.initialized = true
+    this.toggleButtonsState(false)
+    this.isTransitionActive = false
   }
 
 }
