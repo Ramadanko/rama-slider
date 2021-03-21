@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/Ramadanko/rama-slider/compare/v1.4.1...v1.4.2) (2021-03-21)
+
+
+### Bug Fixes
+
+* delay user interaction until first overlay gets created ([#23](https://github.com/Ramadanko/rama-slider/issues/23)) ([869297f](https://github.com/Ramadanko/rama-slider/commit/869297ffa44b42681acb344bd6fadda29e5385cc))
+
 ## [1.4.1](https://github.com/Ramadanko/rama-slider/compare/v1.4.0...v1.4.1) (2021-03-21)
 
 
