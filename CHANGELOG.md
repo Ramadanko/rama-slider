@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Ramadanko/rama-slider/compare/v1.4.0...v1.4.1) (2021-03-21)
+
+
+### Bug Fixes
+
+* adjust overlay position and math ([#22](https://github.com/Ramadanko/rama-slider/issues/22)) ([85b8ac9](https://github.com/Ramadanko/rama-slider/commit/85b8ac91cf017155e7d7ad574b7733003ba63636))
+
 # [1.4.0](https://github.com/Ramadanko/rama-slider/compare/v1.3.3...v1.4.0) (2021-03-21)
 
 
