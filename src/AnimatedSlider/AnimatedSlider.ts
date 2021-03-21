@@ -150,7 +150,7 @@ class AnimatedSlider extends FadeSlider {
     //this.animatedContainers = [...this.animatedContainers, newOverlay];
     this.animatedContainers.push(newOverlay);
     if (!this.initialized) {
-      setTimeout(() => this.enableInteractions(), 100);
+      setTimeout(() => this.enableInteractions(), 250);
     }
   }
 

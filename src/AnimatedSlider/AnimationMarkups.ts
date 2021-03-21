@@ -1,6 +1,6 @@
 const calculateVariables = (container: HTMLElement) => {
   let stripesWidth: string, backgroundSize: string, counter: number;
-  if (container.offsetWidth > 400) {
+  if (container.offsetWidth > 300) {
     counter = 20;
     stripesWidth = '5%';
     backgroundSize = '2000%';
