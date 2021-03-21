@@ -65,10 +65,16 @@ class AnimatedSlider extends FadeSlider {
     let interval = this.options.animationSpeed * 1000;
     switch (this.currentAnimation) {
       case 'StripesOutSequential':
-        interval = interval + 4000;
+        interval = interval + 2000;
         break;
     }
     this.interval = interval;
+  }
+
+  removeLastAnimatedElement(lastElement: HTMLElement): void {
+    setTimeout(() => {
+      lastElement.remove();
+    }, this.interval * 3);
   }
 
   /**
@@ -81,9 +87,7 @@ class AnimatedSlider extends FadeSlider {
     this.prepareAnimation();
     const currentOverlay = this.animatedContainers.shift();
     currentOverlay.classList.add('animate-items');
-    setTimeout(() => {
-      currentOverlay.remove();
-    }, this.interval);
+    this.removeLastAnimatedElement(currentOverlay);
   }
 
   /**
@@ -96,9 +100,7 @@ class AnimatedSlider extends FadeSlider {
     this.prepareAnimation();
     const currentOverlay = this.animatedContainers.shift();
     currentOverlay.classList.add('animate-items');
-    setTimeout(() => {
-      currentOverlay.remove();
-    }, this.interval);
+    this.removeLastAnimatedElement(currentOverlay);
   }
 
   /**
@@ -110,7 +112,7 @@ class AnimatedSlider extends FadeSlider {
     setTimeout(() => {
       this.isTransitionActive = false;
       this.toggleButtonsState(false);
-    }, this.interval);
+    }, this.interval + 100);
   }
 
   /**
@@ -145,7 +147,8 @@ class AnimatedSlider extends FadeSlider {
     const animatedElements = animationMarkups[this.currentAnimation](newContainer, this.options.animationSpeed);
     newOverlay.innerHTML = animatedElements;
     this.newContainer.appendChild(newOverlay);
-    this.animatedContainers = [...this.animatedContainers, newOverlay];
+    //this.animatedContainers = [...this.animatedContainers, newOverlay];
+    this.animatedContainers.push(newOverlay);
   }
 
   /**
