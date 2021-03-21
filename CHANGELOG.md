@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/Ramadanko/rama-slider/compare/v1.3.3...v1.4.0) (2021-03-21)
+
+
+### Features
+
+* **stripesoutsequential animation:** reformat BasicSlider.ts to trigger new release for prev commit ([#21](https://github.com/Ramadanko/rama-slider/issues/21)) ([22617e8](https://github.com/Ramadanko/rama-slider/commit/22617e84b09eea5af6b1fb7e62b50b4f53bc5cad))
+
 ## [1.3.3](https://github.com/Ramadanko/rama-slider/compare/v1.3.2...v1.3.3) (2021-02-22)
 
 
