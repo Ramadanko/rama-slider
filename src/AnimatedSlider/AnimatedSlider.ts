@@ -149,6 +149,9 @@ class AnimatedSlider extends FadeSlider {
     this.newContainer.appendChild(newOverlay);
     //this.animatedContainers = [...this.animatedContainers, newOverlay];
     this.animatedContainers.push(newOverlay);
+    if (!this.initialized) {
+      setTimeout(() => this.enableInteractions(), 100);
+    }
   }
 
   /**
@@ -156,9 +159,6 @@ class AnimatedSlider extends FadeSlider {
    */
   prepareAnimation(): void {
     this.takeSnapshot();
-    if (!this.initialized) {
-      setTimeout(() => this.enableInteractions());
-    }
   }
 
   /**
