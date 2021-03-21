@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/Ramadanko/rama-slider/compare/v1.4.2...v1.4.3) (2021-03-21)
+
+
+### Bug Fixes
+
+* increase delay time before user interaction ([#24](https://github.com/Ramadanko/rama-slider/issues/24)) ([c93bdc2](https://github.com/Ramadanko/rama-slider/commit/c93bdc211990aad6430eec1cfaae16d267570b49))
+
 ## [1.4.2](https://github.com/Ramadanko/rama-slider/compare/v1.4.1...v1.4.2) (2021-03-21)
 
 
