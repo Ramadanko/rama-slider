@@ -1,33 +1,46 @@
 .overlay {
-  &.StripesOut {
+  &.StripesOut,
+  &.StripesOutSequential {
     .image-portion {
-      width: 10%;
       height: 100%;
       position: relative;
       transition: top ease-out, bottom ease-out, opacity linear;
     }
+  }
 
+  &.StripesOut {
     .image-portion:nth-child(odd) {
       top: 0;
       opacity: 1;
     }
-
     .image-portion:nth-child(even) {
       bottom: 0;
       opacity: 1;
     }
   }
 
+  &.StripesOutSequential {
+    .image-portion {
+      top: 0;
+    }
+  }
+
   &.StripesOut.animate-items {
     .image-portion:nth-child(odd) {
       top: -100%;
-      opacity: .75;
+      opacity: 0.75;
     }
 
     .image-portion:nth-child(even) {
       bottom: -100%;
-      opacity: .75;
+      opacity: 0.75;
     }
   }
 
+  &.StripesOutSequential.animate-items {
+    .image-portion {
+      top: -100%;
+      opacity: 0;
+    }
+  }
 }

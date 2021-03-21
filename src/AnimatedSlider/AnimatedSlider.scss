@@ -1,8 +1,7 @@
 .rama-slider {
-
   &.rama-slider-animated {
-    transition: all .2s;
-    transition-delay: .5s;
+    transition: all 0.2s;
+    transition-delay: 0.5s;
   }
 
   .overlay {
@@ -18,13 +17,13 @@
       z-index: 90;
     }
 
-    .image-portion{
+    .image-portion {
       background-repeat: no-repeat;
     }
   }
 
-  @import "./animation-styles/StripesOut.scss";
-  @import "./animation-styles/BoxesOut.scss";
+  @import './animation-styles/StripesOut.scss';
+  @import './animation-styles/BoxesOut.scss';
 }
 
 .one-slide {
