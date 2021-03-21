@@ -1,41 +1,45 @@
 const calculateVariables = (container: HTMLElement) => {
-  let stripesWidth: string, backgroundSize: string, imagePosition: number, counter: number;
+  let stripesWidth: string, backgroundSize: string, counter: number;
   if (container.offsetWidth > 400) {
     counter = 20;
     stripesWidth = '5%';
     backgroundSize = '2000%';
-    imagePosition = 5.26666666;
   } else {
     counter = 10;
     stripesWidth = '10%';
     backgroundSize = '1000%';
-    imagePosition = 11.11111111;
   }
   return {
     counter,
     stripesWidth,
-    imagePosition,
     backgroundSize,
   };
 };
 
-function StripesOut(container?: HTMLElement, animationSpeed?: number, sequential?: Boolean): string {
-  let { counter, stripesWidth, imagePosition, backgroundSize } = calculateVariables(container);
+function StripesOut(container?: HTMLElement, animationSpeed?: number, sequential?: boolean): string {
+  const { counter, stripesWidth, backgroundSize } = calculateVariables(container);
   let markup = '';
-  let styles = `
+  const styles = `
   float:left;width: ${stripesWidth};background-size: ${backgroundSize} 100%;
   transition-duration:${animationSpeed}s`;
+  let position: number;
   if (sequential) {
     for (let i = 0; i < counter; i++) {
+      position = (i / counter) * 105.25;
       markup += `
-      <div class="image-portion" style="${styles};transition-delay: ${i * 0.2}s;
-      background-position:${(i * imagePosition).toFixed(1)}% 0px;"></div>`;
+      <div class="image-portion" style="${styles};transition-delay: ${(i * 0.1).toFixed(1)}s;
+      background-position:${position.toFixed(2)}% 0;"></div>`;
+
+      // position = (i / 20) * container.offsetWidth;
+      // markup += `
+      // <div class="image-portion" style="${styles};transition-delay: ${(i * 0.1).toFixed(1)}s;
+      // background-position:${-position}px 0;"></div>`;
     }
   } else {
     for (let i = 0; i < counter; i++) {
+      position = (i / counter) * 100;
       markup += `
-      <div class="image-portion" style="${styles};
-      background-position:${(i * imagePosition).toFixed(1)}% 0px;"></div>`;
+      <div class="image-portion" style="${styles};background-position:${position}% 0px;"></div>`;
     }
   }
   return markup;

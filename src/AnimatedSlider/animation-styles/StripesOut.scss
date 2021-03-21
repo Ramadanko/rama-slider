@@ -28,19 +28,18 @@
   &.StripesOut.animate-items {
     .image-portion:nth-child(odd) {
       top: -100%;
-      opacity: 0.75;
+      //opacity: 0.75;
     }
 
     .image-portion:nth-child(even) {
       bottom: -100%;
-      opacity: 0.75;
+      //opacity: 0.75;
     }
   }
 
   &.StripesOutSequential.animate-items {
     .image-portion {
       top: -100%;
-      opacity: 0;
     }
   }
 }

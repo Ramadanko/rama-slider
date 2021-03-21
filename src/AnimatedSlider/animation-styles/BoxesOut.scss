@@ -7,8 +7,9 @@
 
   &.BoxesOut.animate-items {
     .image-portion {
+      border-radius: 100%;
       transform: scale(0);
-      opacity: 0;
+      //opacity: 0;
     }
   }
 }
