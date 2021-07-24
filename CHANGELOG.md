@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/Ramadanko/rama-slider/compare/v1.4.3...v1.4.4) (2021-07-24)
+
+
+### Bug Fixes
+
+* page layout, replace npm with yarn, refactor HTML files ([#26](https://github.com/Ramadanko/rama-slider/issues/26)) ([eea903f](https://github.com/Ramadanko/rama-slider/commit/eea903f9c7c1731496c1f2e5fc03c461637bc795))
+
 ## [1.4.3](https://github.com/Ramadanko/rama-slider/compare/v1.4.2...v1.4.3) (2021-03-21)
 
 
