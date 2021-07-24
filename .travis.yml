@@ -1,15 +1,15 @@
 language: javascript
 
 node_js:
-  - "12.18.1"
+  - "14.17.3"
 
 branches:
     only:
       - master
 
 script:
-  - npm run build
+  - yarn build
 
 after_success:
-  - npm run release
+  - yarn release
 
